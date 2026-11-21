@@ -21,6 +21,9 @@ class Palette:
         "key",
         "head",
         "text",
+        # Flow selected highlight line
+        "flow_selected",
+        "flow_selected_key",
         # Options
         "option_selected",
         "option_active",
@@ -123,6 +126,13 @@ class Palette:
                 lst.append(tuple(v))
         return lst
 
+    def focus_map(self, transparent: bool):
+        palette = self.palette(transparent=transparent)
+        return {
+            **{item[0]: "flow_selected" for item in palette},
+            "url_query_key": "flow_selected_key",
+        }
+
 
 def gen_gradient(palette, cols):
     for i in range(100):
@@ -161,6 +171,9 @@ class LowDark(Palette):
         key=("light cyan", "default"),
         head=("white,bold", "default"),
         text=("light gray", "default"),
+        # Flow selected current line
+        flow_selected=("black", "light gray"),
+        flow_selected_key=("black,bold", "light gray"),
         # Options
         option_selected=("black", "light gray"),
         option_selected_key=("light cyan", "light gray"),
@@ -241,6 +254,8 @@ class Dark(LowDark):
         option_selected=("g85", "g45"),
         option_selected_key=("light cyan", "g50"),
         option_active_selected=("light red", "g50"),
+        flow_selected=("g85", "g75"),
+        flow_selected_key=("black", "g75"),
     )
 
 
@@ -260,6 +275,8 @@ class LowLight(Palette):
         key=("dark blue", "default"),
         head=("black", "default"),
         text=("dark gray", "default"),
+        flow_selected=("light gray", "light gray"),
+        flow_selected_key=("light gray", "light gray"),
         # Options
         option_selected=("black", "light gray"),
         option_selected_key=("dark blue", "light gray"),
@@ -343,6 +360,8 @@ class Light(LowLight):
         option_selected=("black", "g85"),
         option_selected_key=("dark blue", "g85"),
         option_active_selected=("light red", "g85"),
+        flow_selected=("light gray", "g85"),
+        flow_selected_key=("light gray", "g85"),
     )
 
 

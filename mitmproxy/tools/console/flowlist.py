@@ -5,6 +5,7 @@ import urwid
 import mitmproxy.tools.console.master
 from mitmproxy.tools.console import common
 from mitmproxy.tools.console import layoutwidget
+from mitmproxy.tools.console import palettes
 
 
 class FlowItem(urwid.WidgetWrap):
@@ -21,12 +22,16 @@ class FlowItem(urwid.WidgetWrap):
         else:
             render_mode = common.RenderMode.TABLE
 
-        return common.format_flow(
+        row = common.format_flow(
             self.flow,
             render_mode=render_mode,
             focused=self.flow is self.master.view.focus.flow,
             hostheader=self.master.options.showhost,
         )
+        focus_map = palettes.palettes[self.master.options.console_palette].focus_map(
+            self.master.options.console_palette_transparent
+        )
+        return urwid.AttrMap(urwid.AttrMap(row, None, focus_map), None, "flow_selected")
 
     def selectable(self):
         return True
